@@ -33,55 +33,51 @@
   </script>
 
   <style>
-    /* RESET KHUSUS BLOGGER: Tampilan Penuh (Full Screen Canvas) */
+    /* ================= RESET KHUSUS: 100% FULL SCREEN EDGE-TO-EDGE ================= */
     html, body {
       margin: 0 !important;
       padding: 0 !important;
-      width: 100% !important;
-      height: 100% !important;
-      overflow-x: hidden !important;
+      width: 100vw !important;
+      height: 100vh !important;
+      overflow: hidden !important;
       font-family: 'Plus Jakarta Sans', system-ui, sans-serif !important;
+      background-color: #121317;
     }
     
-    /* Sembunyikan elemen bawaan template Blogger */
+    /* Sembunyikan elemen bawaan template Blogger jika dipasang di Blogger */
     .navbar, .header, #header, .sidebar, #sidebar, .footer, #footer, 
     .blog-pager, .post-footer, .comments, .widget, .post-title, .status-msg-wrap,
     .quickedit, .widget-item-control, #Attribution1, .blog-feeds {
       display: none !important;
     }
 
-    /* Container Aplikasi Utama */
+    /* Container Aplikasi Utama: Menutupi 100% layar tanpa celah tepi / tanpa margin */
     #im-wan-app {
       position: fixed;
       top: 0;
       left: 0;
-      width: 100vw;
-      height: 100vh;
+      right: 0;
+      bottom: 0;
+      width: 100vw !important;
+      height: 100vh !important;
       z-index: 999999;
-      background: radial-gradient(circle at 15% 15%, #b8c4fc 0%, #d8b4fe 40%, #fed7aa 95%);
+      background-color: #121317;
       overflow: hidden;
       display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0;
-      transition: all 0.3s ease;
+      padding: 0 !important;
+      margin: 0 !important;
+      border: none !important;
     }
 
-    @media (min-width: 1024px) {
-      #im-wan-app {
-        padding: 1.5rem;
-      }
-      .app-shell {
-        border-radius: 2rem !important;
-        box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.15);
-        max-width: 1440px;
-        height: calc(100vh - 3rem) !important;
-      }
-    }
-
+    /* Shell aplikasi membentang penuh 100% */
     .app-shell {
-      width: 100%;
-      height: 100vh;
+      width: 100% !important;
+      height: 100% !important;
+      max-width: 100% !important;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+      margin: 0 !important;
+      padding: 0 !important;
       display: flex;
       overflow: hidden;
       position: relative;
@@ -90,6 +86,9 @@
 
     /* ================= PALET WARNA TEMA ================= */
     /* 1. TEMA DARK CONSOLE (DEFAULT) */
+    .theme-dark #im-wan-app {
+      background-color: #121317;
+    }
     .theme-dark .app-shell {
       background-color: #121317;
       color: #f1f5f9;
@@ -131,6 +130,9 @@
     }
 
     /* 2. TEMA LIGHT CONSOLE */
+    .theme-light #im-wan-app {
+      background-color: #f8fafc;
+    }
     .theme-light .app-shell {
       background-color: #f8fafc;
       color: #0f172a;
@@ -219,7 +221,7 @@
       </div>
     </div>
 
-    <!-- WRAPPER SHELL DASBOR SESUAI GAMBAR -->
+    <!-- WRAPPER SHELL DASBOR (FULL LAYAR 100%) -->
     <div class="app-shell">
 
       <!-- ================= SCREEN 1: LOGIN PRIBADI WAN ================= -->
@@ -285,7 +287,7 @@
       <!-- ================= SCREEN 2: MAIN DASHBOARD & TABS ================= -->
       <div id="mainAppSection" class="hidden w-full h-full flex flex-col md:flex-row overflow-hidden">
         
-        <!-- SIDEBAR KIRI (PERSIS LAYOUT GAMBAR) -->
+        <!-- SIDEBAR KIRI -->
         <aside class="console-sidebar hidden md:flex flex-col w-56 lg:w-60 border-r p-4 shrink-0 justify-between select-none transition-colors duration-200">
           <div>
             <!-- Brand Logo Kiri Atas -->
@@ -304,7 +306,7 @@
               </button>
             </div>
 
-            <!-- Menu Vertikal (Sesuai Desain Gambar: Pill rounded active) -->
+            <!-- Menu Vertikal -->
             <nav class="space-y-1.5" id="desktopNav">
               <!-- Overview / Dasbor -->
               <button onclick="switchTab('dashboard')" class="nav-btn w-full flex items-center gap-3.5 px-3.5 py-2.5 rounded-2xl text-xs font-semibold transition shadow-sm" data-tab="dashboard">
@@ -346,13 +348,12 @@
               <span>Help & info</span>
             </a>
 
-            <!-- ================= SAKLAR DARK CONSOLE INTERAKTIF (PERBAIKAN 1) ================= -->
+            <!-- Saklar Dark Console Interaktif -->
             <div class="flex items-center justify-between px-3 py-1.5 text-xs console-text-muted">
               <span class="flex items-center gap-2.5">
                 <i id="themeIcon" class="fa-solid fa-moon text-xs"></i>
                 <span id="themeLabelText">Dark console</span>
               </span>
-              <!-- Toggle switch interaktif dengan onclick -->
               <div id="btnToggleDarkConsole" onclick="toggleConsoleTheme()" role="button" aria-label="Toggle Dark Console" class="w-9 h-5 rounded-full bg-blue-600 relative p-0.5 cursor-pointer transition-colors duration-300">
                 <div id="switchThumb" class="w-4 h-4 rounded-full bg-white ml-auto transition-all duration-300 shadow-sm"></div>
               </div>
@@ -378,9 +379,9 @@
         <!-- KONTEN UTAMA KANAN -->
         <main class="console-main flex-1 flex flex-col h-full overflow-hidden transition-colors duration-200">
           
-          <!-- TOP BAR (PERSIS SEPERTI GAMBAR) -->
+          <!-- TOP BAR -->
           <header class="console-topbar h-16 px-4 md:px-7 flex items-center justify-between shrink-0 border-b transition-colors duration-200">
-            <!-- Sisi Kiri: Search Bar Oval Khas Dashboard -->
+            <!-- Search Bar Oval -->
             <div class="flex items-center gap-3 flex-1 max-w-md">
               <div class="relative w-full">
                 <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center console-text-muted text-xs">
@@ -390,26 +391,22 @@
               </div>
             </div>
 
-            <!-- Sisi Kanan: "+ Catat Mutasi", Segarkan, Notifikasi & Profil -->
+            <!-- Kanan: "+ Catat Mutasi", Segarkan, Notifikasi & Profil -->
             <div class="flex items-center gap-2.5 md:gap-3.5 ml-3">
-              <!-- Tombol Utama Biru Kapsul -->
               <button onclick="openTransactionModal()" class="bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs px-4 py-2 md:px-5 md:py-2.5 rounded-full flex items-center gap-2 shadow-lg shadow-blue-600/25 transition active:scale-95">
                 <i class="fa-solid fa-plus text-xs"></i>
                 <span class="whitespace-nowrap">Catat Mutasi</span>
               </button>
 
-              <!-- Tombol Segarkan Sync -->
               <button onclick="refreshData()" title="Segarkan Data" class="console-card-sub w-9 h-9 rounded-full border console-divider hover:opacity-80 flex items-center justify-center text-xs transition">
                 <i class="fa-solid fa-rotate" id="refreshIcon"></i>
               </button>
 
-              <!-- Notifikasi Bell -->
               <button onclick="showToast('Sistem buku kas tersinkronisasi sempurna.', 'info')" class="console-card-sub w-9 h-9 rounded-full border console-divider hover:opacity-80 flex items-center justify-center text-xs relative transition">
                 <i class="fa-regular fa-bell"></i>
                 <span class="w-2 h-2 rounded-full bg-rose-500 absolute top-2 right-2 border-2 border-inherit"></span>
               </button>
 
-              <!-- Avatar Profil Wan -->
               <div class="flex items-center gap-2 pl-1 cursor-pointer" onclick="switchTab('reports')">
                 <div class="w-9 h-9 rounded-full bg-gradient-to-tr from-purple-500 to-indigo-600 p-0.5 shadow-sm">
                   <div class="w-full h-full rounded-full bg-slate-900 flex items-center justify-center text-white text-xs font-black">
@@ -424,7 +421,7 @@
           <!-- BODY KONTEN (SCROLLABLE) -->
           <div class="flex-1 overflow-y-auto p-4 md:p-6 lg:p-7 space-y-6">
 
-            <!-- TAB 1: OVERVIEW DASHBOARD (PERSIS DENGAN REFERENSI GAMBAR) -->
+            <!-- TAB 1: OVERVIEW DASHBOARD -->
             <section id="tab-dashboard" class="tab-content space-y-6">
               
               <!-- Greeting Header & Filter Kapsul -->
@@ -448,16 +445,16 @@
                 </div>
               </div>
 
-              <!-- ================= HERO BALANCE CARD (PERSIS SEPERTI GAMBAR) ================= -->
+              <!-- ================= HERO BALANCE CARD ================= -->
               <div class="console-card border rounded-3xl p-5 md:p-6 lg:p-7 shadow-xl relative overflow-hidden transition-all">
                 
-                <!-- Baris Atas Hero Card: Title & Switcher & Chart Toggle -->
+                <!-- Baris Atas Hero Card -->
                 <div class="flex flex-wrap items-center justify-between gap-3">
                   <div>
                     <span class="text-xs font-semibold console-text-muted uppercase tracking-wider">BALANCE TERCATAT</span>
                   </div>
 
-                  <!-- Capsule Switcher: Total Revenue vs Total Expenditure -->
+                  <!-- Capsule Switcher -->
                   <div class="console-card-sub border console-divider flex items-center gap-1 p-1 rounded-full text-xs">
                     <button onclick="setBalanceView('revenue')" id="btnViewRevenue" class="px-3.5 py-1 rounded-full console-text-muted hover:opacity-90 transition text-[11px]">
                       Total Pemasukan
@@ -467,7 +464,7 @@
                     </button>
                   </div>
 
-                  <!-- Ikon Tipe Grafik di Kanan Atas -->
+                  <!-- Ikon Tipe Grafik -->
                   <div class="hidden sm:flex items-center gap-1 console-card-sub border console-divider p-1 rounded-xl text-xs console-text-muted">
                     <button onclick="toggleChartType('line')" id="btnChartLine" class="px-2 py-0.5 rounded-lg text-slate-400 hover:text-white" title="Line Wave">
                       <i class="fa-solid fa-chart-line text-[11px]"></i>
@@ -478,9 +475,8 @@
                   </div>
                 </div>
 
-                <!-- Baris Tengah: Nominal Saldo Besar + Dynamic Wave/Bar Chart (PERBAIKAN 2: SINKRON RIIL) -->
+                <!-- Baris Tengah: Nominal Saldo Besar + Dynamic Wave/Bar Chart -->
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center mt-3 mb-6">
-                  <!-- Sisi Kiri: Angka Saldo Besar + Badge Trend -->
                   <div class="lg:col-span-5 space-y-2">
                     <div class="flex items-baseline gap-3">
                       <h3 id="heroTotalBalance" class="text-3xl md:text-4xl lg:text-5xl font-black tracking-tight">Rp 0</h3>
@@ -494,15 +490,14 @@
                     </p>
                   </div>
 
-                  <!-- Sisi Kanan: Grafik Ungu Glow Sesuai Data Riil -->
+                  <!-- Sisi Kanan: Grafik Ungu Glow -->
                   <div class="lg:col-span-7 h-40 md:h-44 relative">
                     <canvas id="heroWaveChart"></canvas>
                   </div>
                 </div>
 
-                <!-- Baris Bawah: 4 Mini Kolom Pos Rekening / Dompet (Sesuai 4 Kolom di Gambar) -->
+                <!-- Baris Bawah: 4 Mini Kolom Pos Rekening / Dompet -->
                 <div class="pt-5 border-t console-divider grid grid-cols-2 md:grid-cols-4 gap-4">
-                  <!-- Pos 1: Kas Tunai Dompet -->
                   <div class="border-r console-divider last:border-r-0 pr-2">
                     <span class="text-[11px] console-text-muted block font-medium">Kas Tunai</span>
                     <div class="flex items-center gap-2 mt-1">
@@ -511,7 +506,6 @@
                     </div>
                   </div>
 
-                  <!-- Pos 2: Rekening BCA -->
                   <div class="border-r console-divider last:border-r-0 pr-2">
                     <span class="text-[11px] console-text-muted block font-medium">Rekening BCA</span>
                     <div class="flex items-center gap-2 mt-1">
@@ -520,7 +514,6 @@
                     </div>
                   </div>
 
-                  <!-- Pos 3: GoPay / E-Wallet -->
                   <div class="border-r console-divider last:border-r-0 pr-2">
                     <span class="text-[11px] console-text-muted block font-medium">GoPay / E-Wallet</span>
                     <div class="flex items-center gap-2 mt-1">
@@ -529,7 +522,6 @@
                     </div>
                   </div>
 
-                  <!-- Pos 4: Tabungan Mandiri -->
                   <div>
                     <span class="text-[11px] console-text-muted block font-medium">Tabungan Mandiri</span>
                     <div class="flex items-center gap-2 mt-1">
@@ -541,10 +533,10 @@
 
               </div>
 
-              <!-- ================= DUA KARTU BAWAH (ORDER & RECENT ORDER STYLE) ================= -->
+              <!-- ================= DUA KARTU BAWAH ================= -->
               <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
                 
-                <!-- KARTU KIRI: "ORDER STYLE" -> PAGU ANGGARAN & ACTIVITY RING CHART -->
+                <!-- KARTU KIRI: PAGU POS ANGGARAN & ACTIVITY RING CHART -->
                 <div class="lg:col-span-5 console-card border rounded-3xl p-5 md:p-6 shadow-xl flex flex-col justify-between">
                   <div>
                     <div class="flex items-center justify-between mb-4">
@@ -565,19 +557,18 @@
                       </div>
                     </div>
 
-                    <!-- Area Concentric / Segmented Ring Chart -->
                     <div class="h-44 relative my-2 flex items-center justify-center">
                       <canvas id="concentricRingChart"></canvas>
                     </div>
                   </div>
 
-                  <!-- Rincian Legend Bulat Kategori -->
+                  <!-- Legend Kategori -->
                   <div id="concentricLegend" class="space-y-2 pt-2 border-t console-divider text-xs">
-                    <!-- Dynamic by JS -->
+                    <!-- Dynamic -->
                   </div>
                 </div>
 
-                <!-- KARTU KANAN: "RECENT ORDER STYLE" -> MUTASI TRANSAKSI TERAKHIR -->
+                <!-- KARTU KANAN: MUTASI TRANSAKSI TERAKHIR -->
                 <div class="lg:col-span-7 console-card border rounded-3xl p-5 md:p-6 shadow-xl flex flex-col justify-between">
                   <div>
                     <div class="flex items-center justify-between mb-4">
@@ -591,13 +582,11 @@
                       </button>
                     </div>
 
-                    <!-- List Transaksi Minimalis Sesuai Gambar -->
                     <div id="recentTransactionsList" class="space-y-2.5">
                       <!-- Rendered by JS -->
                     </div>
                   </div>
 
-                  <!-- Tombol Tambah Cepat di Dasar Kartu -->
                   <div class="pt-4 mt-2 border-t console-divider flex items-center justify-between">
                     <span class="text-[11px] console-text-muted">Ada transaksi baru hari ini?</span>
                     <button onclick="openTransactionModal()" class="text-xs font-semibold text-blue-500 hover:text-blue-400 flex items-center gap-1.5 transition">
@@ -669,7 +658,7 @@
                       </tr>
                     </thead>
                     <tbody id="fullTransactionTableBody" class="divide-y console-divider font-medium">
-                      <!-- Rendered by JS -->
+                      <!-- Dynamic -->
                     </tbody>
                   </table>
                 </div>
@@ -696,7 +685,7 @@
 
               <!-- GRID DOMPET -->
               <div id="walletsGridContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                <!-- Rendered by JS -->
+                <!-- Dynamic -->
               </div>
             </section>
 
@@ -713,7 +702,7 @@
               </div>
 
               <div id="budgetsFullContainer" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <!-- Rendered by JS -->
+                <!-- Dynamic -->
               </div>
             </section>
 
@@ -772,7 +761,7 @@
 
           </div>
 
-          <!-- BOTTOM NAV MOBILE (KHUSUS TAMPILAN HP) -->
+          <!-- BOTTOM NAV MOBILE -->
           <nav class="md:hidden console-sidebar border-t console-divider px-3 py-2 flex items-center justify-around shrink-0 z-20" id="mobileNav">
             <button onclick="switchTab('dashboard')" class="mobile-nav-btn flex flex-col items-center gap-1 text-[10px] font-semibold text-blue-500" data-tab="dashboard">
               <i class="fa-solid fa-table-cells-large text-sm"></i>
@@ -818,7 +807,6 @@
         </div>
 
         <form id="formTransaction" onsubmit="handleSaveTransaction(event)" class="space-y-4">
-          <!-- Tipe Mutasi Switcher -->
           <div class="grid grid-cols-3 gap-1 p-1 bg-[#121317] rounded-xl border border-[#252834]">
             <button type="button" onclick="setTxType('Pengeluaran')" id="btnTypeExpense" class="py-2 text-xs font-semibold rounded-lg bg-rose-600 text-white transition">Pengeluaran</button>
             <button type="button" onclick="setTxType('Pemasukan')" id="btnTypeIncome" class="py-2 text-xs font-semibold rounded-lg text-slate-400 hover:text-white transition">Pemasukan</button>
@@ -827,7 +815,6 @@
           <input type="hidden" id="txType" value="Pengeluaran">
           <input type="hidden" id="txId" value="">
 
-          <!-- Nominal -->
           <div>
             <label class="block text-xs font-medium text-slate-300 mb-1">Nominal (Rp)</label>
             <div class="relative">
@@ -836,13 +823,11 @@
             </div>
           </div>
 
-          <!-- Tanggal -->
           <div>
             <label class="block text-xs font-medium text-slate-300 mb-1">Tanggal Transaksi</label>
             <input type="date" id="txDate" required class="w-full bg-[#121317] border border-[#272b38] rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-blue-500">
           </div>
 
-          <!-- Pos Dompet / Rekening Asal -->
           <div id="txWalletSection">
             <label class="block text-xs font-medium text-slate-300 mb-1" id="lblTxWallet">Dari Dompet / Rekening</label>
             <select id="txWallet" required class="w-full bg-[#121317] border border-[#272b38] rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-blue-500">
@@ -850,7 +835,6 @@
             </select>
           </div>
 
-          <!-- Transfer Ke Dompet (Khusus Transfer) -->
           <div id="txTargetWalletSection" class="hidden">
             <label class="block text-xs font-medium text-slate-300 mb-1">Tujuan Pindah Rekening</label>
             <select id="txTargetWallet" class="w-full bg-[#121317] border border-[#272b38] rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-blue-500">
@@ -858,7 +842,6 @@
             </select>
           </div>
 
-          <!-- Kategori -->
           <div id="txCategorySection">
             <label class="block text-xs font-medium text-slate-300 mb-1">Pos Kategori Belanja</label>
             <select id="txCategory" required class="w-full bg-[#121317] border border-[#272b38] rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-blue-500">
@@ -866,7 +849,6 @@
             </select>
           </div>
 
-          <!-- Keterangan -->
           <div>
             <label class="block text-xs font-medium text-slate-300 mb-1">Keterangan / Catatan Tambahan</label>
             <input type="text" id="txNotes" class="w-full bg-[#121317] border border-[#272b38] rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-blue-500" placeholder="Misal: Makan siang / Bensin motor / Bayar tagihan">
@@ -961,9 +943,9 @@
   <script>
     /* =========================================================
        KONFIGURASI APLIKASI i'm_wan (BUKU KAS PRIBADI)
-       UBAH IS_PREVIEW KE false JIKA AKAN DI-DEPLOY KE BLOGGER
+       UBAH IS_PREVIEW KE false JIKA AKAN DI-DEPLOY KE GAS
        ========================================================= */
-    const IS_PREVIEW = false; // Set default true untuk Canvas / Demo
+    const IS_PREVIEW = false; // Set default true untuk Demo/Preview
     const GAS_URL = "https://script.google.com/macros/s/AKfycbzaWwV2no23yu1JqBXnSmZ89xQY8ijGxlelhyHVAYnWqqVr0fSTzf-X_lZ5oEOOasw5/exec";
 
     // STATE UTAMA APLIKASI
@@ -973,18 +955,18 @@
     let budgetsData = [];
     let categoriesData = [];
 
-    // THEME STATE (Dark Console vs Light Console)
+    // THEME STATE
     let isDarkMode = true;
 
-    // VIEW FILTER STATE (SESUAI TAMPILAN GAMBAR KE-2)
+    // VIEW FILTER STATE
     let activeBalanceView = 'expenditure'; // 'expenditure' | 'revenue'
     let activeChartType = 'bar'; // 'bar' | 'line'
     let activeTimeFilter = 'month'; // 'today' | 'month' | 'all'
 
-    // DUMMY DATA AWAL (TOTAL PENGELUARAN TEPAT RP 1.445.000)
+    // DUMMY DATA AWAL
     const DUMMY_WALLETS = [
-      { id: 'W1', name: 'Kas Tunai', balance: 450000, number: 'Cash di Tangan', color: '#10b981' },
-      { id: 'W2', name: 'Rekening BCA', balance: 5200000, number: '8271-992-019', color: '#3b82f6' },
+      { id: 'W1', name: 'Kas Tunai', balance: 500000, number: 'Cash di Tangan', color: '#10b981' },
+      { id: 'W2', name: 'Rekening BCA', balance: 6770000, number: '8271-992-019', color: '#3b82f6' },
       { id: 'W3', name: 'GoPay / E-Wallet', balance: 350000, number: '0812-3456-7890', color: '#06b6d4' },
       { id: 'W4', name: 'Tabungan Mandiri', balance: 12500000, number: '137-00-998822-1', color: '#8b5cf6' }
     ];
@@ -1004,16 +986,14 @@
       { id: 'B1', category: 'Makan & Minum', limit: 1800000 },
       { id: 'B2', category: 'Transportasi & Bensin', limit: 600000 },
       { id: 'B3', category: 'Belanja Pokok', limit: 1200000 },
-      { id: 'B4', category: 'Hiburan & Santai', limit: 500000 }
+      { id: 'B4', category: 'Tagihan & Langganan', limit: 800000 }
     ];
 
-    // Transaksi realistis bulan Oktober 2026:
-    // Pengeluaran: 750k (Sab) + 480k (Sen) + 45k (Sen) + 50k (Min) + 120k (Kam) = TEPAT Rp 1.445.000!
     const DUMMY_TRANSACTIONS = [
       { id: 'TX-101', date: '2026-10-01', type: 'Pemasukan', category: 'Gaji Pokok', wallet: 'Rekening BCA', amount: 8500000, notes: 'Gaji Bulanan Oktober 2026' },
       { id: 'TX-102', date: '2026-10-03', type: 'Pengeluaran', category: 'Belanja Pokok', wallet: 'Rekening BCA', amount: 750000, notes: 'Belanja sembako bulanan' },
       { id: 'TX-103', date: '2026-10-05', type: 'Pengeluaran', category: 'Tagihan & Langganan', wallet: 'Rekening BCA', amount: 480000, notes: 'PLN Token & Wifi' },
-      { id: 'TX-104', date: '2026-10-08', type: 'Transfer', category: 'Transfer', wallet: 'Rekening BCA', targetWallet: 'Kas Tunai', amount: 500000, notes: 'Tarik tunai ATM untuk uang pegangan' },
+      { id: 'TX-104', date: '2026-10-08', type: 'Transfer', category: 'Transfer', wallet: 'Rekening BCA', targetWallet: 'Kas Tunai', amount: 500000, notes: 'Tarik tunai ATM untuk pegangan' },
       { id: 'TX-105', date: '2026-10-12', type: 'Pengeluaran', category: 'Makan & Minum', wallet: 'Kas Tunai', amount: 45000, notes: 'Makan siang ayam bakar' },
       { id: 'TX-106', date: '2026-10-15', type: 'Pemasukan', category: 'Proyek Freelance', wallet: 'Rekening BCA', amount: 1800000, notes: 'DP Proyek Klien' },
       { id: 'TX-107', date: '2026-10-18', type: 'Pengeluaran', category: 'Transportasi & Bensin', wallet: 'GoPay / E-Wallet', amount: 50000, notes: 'Isi bensin motor' },
@@ -1024,9 +1004,30 @@
     let heroWaveChartInstance = null;
     let concentricRingChartInstance = null;
 
+    /* =========================================================
+       HELPER NORMALISASI TANGGAL: MENCEGAH STRING PANJANG GAS
+       ========================================================= */
+    function normalizeDateStr(rawDate) {
+      if (!rawDate) return '';
+      if (typeof rawDate === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(rawDate)) {
+        return rawDate;
+      }
+      const d = new Date(rawDate);
+      if (isNaN(d.getTime())) {
+        if (typeof rawDate === 'string' && rawDate.length >= 10) {
+          const match = rawDate.match(/\d{4}-\d{2}-\d{2}/);
+          if (match) return match[0];
+        }
+        return String(rawDate).slice(0, 10);
+      }
+      const y = d.getFullYear();
+      const m = String(d.getMonth() + 1).padStart(2, '0');
+      const day = String(d.getDate()).padStart(2, '0');
+      return `${y}-${m}-${day}`;
+    }
+
     // DOM READY
     window.addEventListener('DOMContentLoaded', () => {
-      // Inisialisasi Tema Tersimpan
       const savedTheme = localStorage.getItem('im_wan_theme');
       if (savedTheme === 'light') {
         setThemeMode(false);
@@ -1053,9 +1054,7 @@
       }
     });
 
-    /* =========================================================
-       PERBAIKAN 1: IMPLEMENTASI FITUR DARK CONSOLE TOGGLE
-       ========================================================= */
+    /* TOGGLE THEME */
     function toggleConsoleTheme() {
       setThemeMode(!isDarkMode);
       showToast(`Mode dialihkan ke ${isDarkMode ? 'Dark Console' : 'Light Console'}`, 'info');
@@ -1097,12 +1096,11 @@
         if (themeIcon) themeIcon.className = 'fa-solid fa-sun text-xs text-amber-500';
       }
 
-      // Re-render chart agar warna garis/grid menyesuaikan
       if (heroWaveChartInstance) renderWaveChart();
       if (concentricRingChartInstance) renderConcentricRingChart();
     }
 
-    /* NOTIFIKASI TOAST & CONFIRM MODAL */
+    /* TOAST & CONFIRM MODAL */
     function showToast(message, type = 'success') {
       const toast = document.getElementById('toast');
       const toastMsg = document.getElementById('toast-msg');
@@ -1218,14 +1216,19 @@
       });
     }
 
-    /* DATA LOADING */
+    /* DATA LOADING & NORMALISASI */
     function loadInitialData() {
       if (IS_PREVIEW) {
         const localTx = localStorage.getItem('im_wan_tx');
         const localWallets = localStorage.getItem('im_wan_wallets');
         const localBudgets = localStorage.getItem('im_wan_budgets');
 
-        transactionsData = localTx ? JSON.parse(localTx) : [...DUMMY_TRANSACTIONS];
+        const rawList = localTx ? JSON.parse(localTx) : DUMMY_TRANSACTIONS;
+        transactionsData = rawList.map(t => ({
+          ...t,
+          date: normalizeDateStr(t.date)
+        }));
+
         walletsData = localWallets ? JSON.parse(localWallets) : [...DUMMY_WALLETS];
         budgetsData = localBudgets ? JSON.parse(localBudgets) : [...DUMMY_BUDGETS];
         categoriesData = [...DUMMY_CATEGORIES];
@@ -1254,7 +1257,10 @@
         .then(res => {
           if (icon) icon.classList.remove('fa-spin');
           if (res.status === 'success') {
-            transactionsData = res.transactions || [];
+            transactionsData = (res.transactions || []).map(t => ({
+              ...t,
+              date: normalizeDateStr(t.date)
+            }));
             walletsData = res.wallets || [];
             budgetsData = res.budgets || [];
             categoriesData = res.categories || [];
@@ -1278,7 +1284,6 @@
       }
     }
 
-    /* FORMAT CURRENCY */
     function formatRupiah(amount) {
       const num = Number(amount) || 0;
       return 'Rp ' + num.toLocaleString('id-ID');
@@ -1333,22 +1338,23 @@
       if (budgetCategory) budgetCategory.innerHTML = budgetCatOpts;
     }
 
-    /* =========================================================
-       HERO BALANCE CARD: SINKRON TOTAL PEMASUKAN / PENGELUARAN
-       ========================================================= */
+    /* HERO BALANCE CARD */
     function renderHeroBalanceCard() {
-      const totalBalance = walletsData.reduce((acc, w) => acc + (Number(w.balance) || 0), 0);
-      
       const now = new Date();
       const curMonth = now.toISOString().slice(0, 7);
 
-      // Filter transaksi sesuai periode aktif
       let filteredTx = transactionsData;
       if (activeTimeFilter === 'today') {
         const todayStr = now.toISOString().slice(0, 10);
         filteredTx = transactionsData.filter(t => t.date === todayStr);
       } else if (activeTimeFilter === 'month') {
         filteredTx = transactionsData.filter(t => t.date && t.date.startsWith(curMonth));
+        // Fallback jika belum ada transaksi di bulan sistem hari ini, tampilkan bulan dari mutasi terbaru
+        if (filteredTx.length === 0 && transactionsData.length > 0) {
+          const sorted = [...transactionsData].sort((a,b) => new Date(b.date) - new Date(a.date));
+          const latestMonth = sorted[0].date ? sorted[0].date.slice(0, 7) : curMonth;
+          filteredTx = transactionsData.filter(t => t.date && t.date.startsWith(latestMonth));
+        }
       }
       
       const totalIn = filteredTx.filter(t => t.type === 'Pemasukan').reduce((s, t) => s + Number(t.amount || 0), 0);
@@ -1367,7 +1373,6 @@
         heroTrendText.textContent = '+24%';
         heroSubtext.textContent = 'Total pemasukan tercatat pada periode ini';
       } else {
-        // Tepat Rp 1.445.000 sesuai Gambar ke-2
         heroTotalEl.textContent = formatRupiah(totalOut);
         heroTrendEl.className = 'inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-rose-500/10 text-rose-400 border border-rose-500/20 text-xs font-bold';
         heroTrendIcon.className = 'fa-solid fa-arrow-trend-down text-[10px]';
@@ -1375,9 +1380,9 @@
         heroSubtext.textContent = 'Total pengeluaran tercatat pada periode bulan berjalan ini';
       }
 
-      // 4 Mini Pos di bagian bawah kartu hero persis gambar 2
-      const w1 = walletsData[0] ? walletsData[0].balance : 450000;
-      const w2 = walletsData[1] ? walletsData[1].balance : 5200000;
+      // 4 Mini Pos Rekening / Dompet
+      const w1 = walletsData[0] ? walletsData[0].balance : 500000;
+      const w2 = walletsData[1] ? walletsData[1].balance : 6770000;
       const w3 = walletsData[2] ? walletsData[2].balance : 350000;
       const w4 = walletsData[3] ? walletsData[3].balance : 12500000;
 
@@ -1445,46 +1450,49 @@
       }
     }
 
-    /* =========================================================
-       PERBAIKAN 2: GRAFIK SESUAI PERSIS DENGAN SALDO RIIL
-       ========================================================= */
+    /* GRAFIK GELOMBANG / BATANG DASHBOARD */
     function renderWaveChart() {
       const canvas = document.getElementById('heroWaveChart');
       if (!canvas) return;
       const ctx = canvas.getContext('2d');
       if (heroWaveChartInstance) heroWaveChartInstance.destroy();
 
-      // Label 7 Hari (Mon - Sun) Sesuai Gambar Referensi
       const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-      const dayValues = [0, 0, 0, 0, 0, 0, 0]; // Index: 0=Mon, 1=Tue, ..., 6=Sun
+      const dayValues = [0, 0, 0, 0, 0, 0, 0];
 
       const now = new Date();
       const curMonth = now.toISOString().slice(0, 7);
       const targetType = activeBalanceView === 'revenue' ? 'Pemasukan' : 'Pengeluaran';
 
-      // Filter transaksi sesuai periode aktif dan tipe
       const relevantTx = transactionsData.filter(t => {
-        const matchesType = t.type === targetType;
-        if (!matchesType) return false;
-
+        if (t.type !== targetType) return false;
         if (activeTimeFilter === 'today') {
           return t.date === now.toISOString().slice(0, 10);
         } else if (activeTimeFilter === 'month') {
-          return t.date && t.date.startsWith(curMonth);
+          const inCurMonth = t.date && t.date.startsWith(curMonth);
+          if (inCurMonth) return true;
+          if (transactionsData.length > 0) {
+            const sorted = [...transactionsData].sort((a,b) => new Date(b.date) - new Date(a.date));
+            const latestMonth = sorted[0].date ? sorted[0].date.slice(0, 7) : curMonth;
+            return t.date && t.date.startsWith(latestMonth);
+          }
+          return false;
         }
         return true;
       });
 
-      // Hitung agregasi riil per hari dalam seminggu
       relevantTx.forEach(t => {
         if (!t.date) return;
-        const d = new Date(t.date + 'T00:00:00');
-        const jsDay = d.getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
-        const mappedIdx = (jsDay === 0) ? 6 : (jsDay - 1); // 0=Mon, ..., 6=Sun
-        dayValues[mappedIdx] += Number(t.amount || 0);
+        const norm = normalizeDateStr(t.date);
+        const parts = norm.split('-');
+        if (parts.length === 3) {
+          const d = new Date(Number(parts[0]), Number(parts[1]) - 1, Number(parts[2]));
+          const jsDay = d.getDay(); // 0 = Sunday, 1 = Monday
+          const mappedIdx = (jsDay === 0) ? 6 : (jsDay - 1);
+          dayValues[mappedIdx] += Number(t.amount || 0);
+        }
       });
 
-      // Cari indeks nilai tertinggi untuk pinpoint dot
       let maxVal = -1;
       let peakIdx = 3;
       dayValues.forEach((val, idx) => {
@@ -1494,7 +1502,6 @@
         }
       });
 
-      // Gradient Ungu Glowing Khas Desain Gambar
       const purpleGradient = ctx.createLinearGradient(0, 0, 0, 160);
       purpleGradient.addColorStop(0, 'rgba(168, 85, 247, 0.65)');
       purpleGradient.addColorStop(0.6, 'rgba(139, 92, 246, 0.25)');
@@ -1516,7 +1523,7 @@
             backgroundColor: isLine ? purpleGradient : 'rgba(168, 85, 247, 0.35)',
             hoverBackgroundColor: 'rgba(168, 85, 247, 0.75)',
             borderRadius: isLine ? 0 : 6,
-            tension: 0.45, // Kurva sangat halus bergelombang
+            tension: 0.45,
             pointBackgroundColor: '#ffffff',
             pointBorderColor: '#8b5cf6',
             pointBorderWidth: 2.5,
@@ -1538,10 +1545,7 @@
               padding: 10,
               displayColors: false,
               callbacks: {
-                title: (items) => {
-                  const dayName = items[0].label;
-                  return `${dayName} (Periode ${activeTimeFilter.toUpperCase()})`;
-                },
+                title: (items) => `${items[0].label} (Periode ${activeTimeFilter.toUpperCase()})`,
                 label: (item) => formatRupiah(item.raw)
               }
             }
@@ -1561,7 +1565,7 @@
       });
     }
 
-    /* CONCENTRIC RING CHART (ORDER STYLE) */
+    /* CONCENTRIC RING CHART */
     function renderConcentricRingChart() {
       const canvas = document.getElementById('concentricRingChart');
       if (!canvas) return;
@@ -1611,7 +1615,6 @@
         }
       });
 
-      // Render Legend
       const legendEl = document.getElementById('concentricLegend');
       let legHtml = '';
       labels.slice(0, 4).forEach((label, idx) => {
@@ -1630,7 +1633,7 @@
       legendEl.innerHTML = legHtml;
     }
 
-    /* RECENT TRANSACTIONS (RECENT ORDER STYLE) */
+    /* RECENT TRANSACTIONS */
     function renderRecentTransactions() {
       const container = document.getElementById('recentTransactionsList');
       const sorted = [...transactionsData].sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 5);
@@ -1662,6 +1665,8 @@
           icon = 'fa-repeat';
         }
 
+        const cleanDate = normalizeDateStr(t.date);
+
         return `
           <div class="console-card-sub flex items-center justify-between p-2.5 rounded-2xl border console-divider hover:opacity-90 transition">
             <div class="flex items-center gap-3">
@@ -1670,7 +1675,7 @@
               </div>
               <div>
                 <p class="text-xs font-bold leading-tight">${t.category || t.type}</p>
-                <p class="text-[10px] console-text-muted mt-0.5">${t.wallet} • ${t.date} ${t.notes ? '• ' + t.notes : ''}</p>
+                <p class="text-[10px] console-text-muted mt-0.5">${t.wallet} • ${cleanDate} ${t.notes ? '• ' + t.notes : ''}</p>
               </div>
             </div>
             <div class="text-right">
@@ -1689,11 +1694,12 @@
       const month = document.getElementById('filterTxMonth').value;
 
       const filtered = transactionsData.filter(t => {
+        const cleanDate = normalizeDateStr(t.date);
         const matchKey = (t.notes || '').toLowerCase().includes(keyword) || 
                          (t.category || '').toLowerCase().includes(keyword);
         const matchType = type === 'ALL' || t.type === type;
         const matchWallet = wallet === 'ALL' || t.wallet === wallet || t.targetWallet === wallet;
-        const matchMonth = !month || (t.date && t.date.startsWith(month));
+        const matchMonth = !month || (cleanDate && cleanDate.startsWith(month));
         return matchKey && matchType && matchWallet && matchMonth;
       });
 
@@ -1722,10 +1728,11 @@
         }
 
         const walletDisplay = t.type === 'Transfer' ? `${t.wallet} ➜ ${t.targetWallet || 'Tujuan'}` : t.wallet;
+        const cleanDate = normalizeDateStr(t.date);
 
         return `
           <tr class="hover:bg-blue-600/5 transition">
-            <td class="p-3.5 whitespace-nowrap">${t.date}</td>
+            <td class="p-3.5 whitespace-nowrap font-mono text-[11px]">${cleanDate}</td>
             <td class="p-3.5 whitespace-nowrap">${typeBadge}</td>
             <td class="p-3.5 font-bold whitespace-nowrap">${t.category}</td>
             <td class="p-3.5 console-text-muted whitespace-nowrap">${walletDisplay}</td>
@@ -1753,7 +1760,7 @@
       applyTableFilters();
     }
 
-    /* GRID POS DOMPET */
+    /* GRID DOMPET */
     function renderWalletsGrid() {
       const container = document.getElementById('walletsGridContainer');
       container.innerHTML = walletsData.map(w => {
@@ -1789,7 +1796,7 @@
       document.getElementById('txWallet').value = name;
     }
 
-    /* PAGU ANGGARAN & BUDGETING TAB */
+    /* BUDGETING TAB */
     function renderBudgetsFull() {
       const container = document.getElementById('budgetsFullContainer');
       const now = new Date().toISOString().slice(0, 7);
@@ -1968,7 +1975,7 @@
 
       const newTx = {
         id: 'TX-' + Date.now(),
-        date: date,
+        date: normalizeDateStr(date),
         type: type,
         category: category,
         wallet: wallet,
@@ -2112,7 +2119,7 @@
     }
 
     function openHelpModal() {
-      showToast('Aplikasi Buku Kas Mandiri i\'m_wan v2.2 - Khusus Personal Wan', 'info');
+      showToast('Aplikasi Buku Kas Mandiri i\'m_wan v2.5 - Full Screen', 'info');
     }
 
     /* EKSPOR CSV */
