@@ -51,7 +51,7 @@
       display: none !important;
     }
 
-    /* Container Aplikasi Utama: Menutupi 100% layar tanpa celah tepi / tanpa margin */
+    /* Container Aplikasi Utama: Menutupi 100% layar tanpa celah tepi */
     #im-wan-app {
       position: fixed;
       top: 0;
@@ -210,7 +210,7 @@
     <div id="confirmModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
       <div class="bg-[#181a21] border border-[#2b2e3b] rounded-3xl max-w-sm w-full p-6 shadow-2xl text-center">
         <div class="w-12 h-12 rounded-2xl bg-rose-500/10 text-rose-400 flex items-center justify-center mx-auto mb-4 text-xl border border-rose-500/20">
-          <i class="fa-solid fa-shield-halved"></i>
+          <i class="fa-solid fa-triangle-exclamation"></i>
         </div>
         <h3 id="confirmTitle" class="text-sm font-bold text-white">Konfirmasi Tindakan</h3>
         <p id="confirmDesc" class="text-xs text-slate-400 mt-2 leading-relaxed">Apakah Anda yakin ingin melanjutkan tindakan ini?</p>
@@ -497,38 +497,8 @@
                 </div>
 
                 <!-- Baris Bawah: 4 Mini Kolom Pos Rekening / Dompet -->
-                <div class="pt-5 border-t console-divider grid grid-cols-2 md:grid-cols-4 gap-4">
-                  <div class="border-r console-divider last:border-r-0 pr-2">
-                    <span class="text-[11px] console-text-muted block font-medium">Kas Tunai</span>
-                    <div class="flex items-center gap-2 mt-1">
-                      <i class="fa-solid fa-arrow-trend-up text-emerald-400 text-xs"></i>
-                      <span id="miniWallet1" class="text-sm md:text-base font-bold">Rp 0</span>
-                    </div>
-                  </div>
-
-                  <div class="border-r console-divider last:border-r-0 pr-2">
-                    <span class="text-[11px] console-text-muted block font-medium">Rekening BCA</span>
-                    <div class="flex items-center gap-2 mt-1">
-                      <i class="fa-solid fa-arrow-trend-up text-emerald-400 text-xs"></i>
-                      <span id="miniWallet2" class="text-sm md:text-base font-bold">Rp 0</span>
-                    </div>
-                  </div>
-
-                  <div class="border-r console-divider last:border-r-0 pr-2">
-                    <span class="text-[11px] console-text-muted block font-medium">GoPay / E-Wallet</span>
-                    <div class="flex items-center gap-2 mt-1">
-                      <i class="fa-solid fa-arrow-trend-down text-rose-400 text-xs"></i>
-                      <span id="miniWallet3" class="text-sm md:text-base font-bold">Rp 0</span>
-                    </div>
-                  </div>
-
-                  <div>
-                    <span class="text-[11px] console-text-muted block font-medium">Tabungan Mandiri</span>
-                    <div class="flex items-center gap-2 mt-1">
-                      <i class="fa-solid fa-arrow-trend-up text-emerald-400 text-xs"></i>
-                      <span id="miniWallet4" class="text-sm md:text-base font-bold">Rp 0</span>
-                    </div>
-                  </div>
+                <div class="pt-5 border-t console-divider grid grid-cols-2 md:grid-cols-4 gap-4" id="heroMiniWalletsContainer">
+                  <!-- Dynamic 4 Wallets rendered by JS -->
                 </div>
 
               </div>
@@ -676,7 +646,7 @@
               <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div>
                   <h3 class="text-base md:text-lg font-bold">Pos Rekening & Dompet Saya</h3>
-                  <p class="text-xs console-text-muted">Daftar buku kas sumber uang tunai, bank, dan e-wallet Wan</p>
+                  <p class="text-xs console-text-muted">Kelola seluruh buku kas sumber uang tunai, bank, dan e-wallet Wan</p>
                 </div>
                 <button onclick="openWalletModal()" class="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-full text-xs flex items-center gap-2 transition self-start sm:self-auto shadow-md shadow-blue-600/20">
                   <i class="fa-solid fa-plus"></i> Tambah Pos Rekening
@@ -685,7 +655,7 @@
 
               <!-- GRID DOMPET -->
               <div id="walletsGridContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                <!-- Dynamic -->
+                <!-- Dynamic rendered by JS with Edit & Delete actions -->
               </div>
             </section>
 
@@ -702,7 +672,7 @@
               </div>
 
               <div id="budgetsFullContainer" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <!-- Dynamic -->
+                <!-- Dynamic rendered by JS with Edit & Delete actions -->
               </div>
             </section>
 
@@ -862,7 +832,7 @@
       </div>
     </div>
 
-    <!-- 2. MODAL TAMBAH POS DOMPET -->
+    <!-- 2. MODAL TAMBAH & EDIT POS DOMPET -->
     <div id="modalWallet" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4 overflow-y-auto">
       <div class="bg-[#181a22] border border-[#2b2e3b] rounded-3xl max-w-sm w-full p-6 shadow-2xl my-auto text-white">
         <div class="flex items-center justify-between pb-4 border-b border-[#262834] mb-4">
@@ -870,7 +840,7 @@
             <span class="w-7 h-7 rounded-xl bg-teal-500/20 text-teal-400 flex items-center justify-center text-xs">
               <i class="fa-solid fa-wallet"></i>
             </span>
-            <span>Tambah Pos Rekening</span>
+            <span id="walletModalTitle">Tambah Pos Rekening</span>
           </h3>
           <button onclick="closeModal('modalWallet')" class="text-slate-400 hover:text-white text-base">
             <i class="fa-solid fa-xmark"></i>
@@ -878,14 +848,16 @@
         </div>
 
         <form id="formWallet" onsubmit="handleSaveWallet(event)" class="space-y-4">
+          <input type="hidden" id="walletEditId" value="">
+
           <div>
             <label class="block text-xs font-medium text-slate-300 mb-1">Nama Rekening / Dompet</label>
-            <input type="text" id="walletName" required placeholder="Contoh: Rekening BCA, GoPay, Tunai Dompet" class="w-full bg-[#121317] border border-[#272b38] rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-blue-500">
+            <input type="text" id="walletName" required placeholder="Contoh: Rekening BCA, GoPay, Kas Tunai" class="w-full bg-[#121317] border border-[#272b38] rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-blue-500">
           </div>
 
           <div>
-            <label class="block text-xs font-medium text-slate-300 mb-1">Saldo Awal Tercatat (Rp)</label>
-            <input type="number" id="walletInitialBalance" min="0" required placeholder="0" class="w-full bg-[#121317] border border-[#272b38] rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-blue-500">
+            <label class="block text-xs font-medium text-slate-300 mb-1">Saldo Tercatat (Rp)</label>
+            <input type="number" id="walletBalance" min="0" required placeholder="0" class="w-full bg-[#121317] border border-[#272b38] rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-blue-500">
           </div>
 
           <div>
@@ -895,13 +867,13 @@
 
           <div class="pt-2 flex items-center gap-3">
             <button type="button" onclick="closeModal('modalWallet')" class="w-1/2 py-2.5 rounded-xl border border-slate-700 hover:bg-slate-800 text-slate-300 font-medium transition text-xs">Batal</button>
-            <button type="submit" class="w-1/2 py-2.5 rounded-xl bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold transition text-xs shadow-md shadow-teal-500/25">Simpan Pos</button>
+            <button type="submit" id="btnSubmitWallet" class="w-1/2 py-2.5 rounded-xl bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold transition text-xs shadow-md shadow-teal-500/25">Simpan Pos</button>
           </div>
         </form>
       </div>
     </div>
 
-    <!-- 3. MODAL ATUR PAGU ANGGARAN -->
+    <!-- 3. MODAL ATUR & EDIT PAGU ANGGARAN -->
     <div id="modalBudget" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4 overflow-y-auto">
       <div class="bg-[#181a22] border border-[#2b2e3b] rounded-3xl max-w-sm w-full p-6 shadow-2xl my-auto text-white">
         <div class="flex items-center justify-between pb-4 border-b border-[#262834] mb-4">
@@ -909,7 +881,7 @@
             <span class="w-7 h-7 rounded-xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center text-xs">
               <i class="fa-solid fa-bullseye"></i>
             </span>
-            <span>Atur Pagu Anggaran Bulanan</span>
+            <span id="budgetModalTitle">Atur Pagu Anggaran Bulanan</span>
           </h3>
           <button onclick="closeModal('modalBudget')" class="text-slate-400 hover:text-white text-base">
             <i class="fa-solid fa-xmark"></i>
@@ -917,6 +889,8 @@
         </div>
 
         <form id="formBudget" onsubmit="handleSaveBudget(event)" class="space-y-4">
+          <input type="hidden" id="budgetEditId" value="">
+
           <div>
             <label class="block text-xs font-medium text-slate-300 mb-1">Pos Kategori Belanja</label>
             <select id="budgetCategory" required class="w-full bg-[#121317] border border-[#272b38] rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-blue-500">
@@ -931,7 +905,7 @@
 
           <div class="pt-2 flex items-center gap-3">
             <button type="button" onclick="closeModal('modalBudget')" class="w-1/2 py-2.5 rounded-xl border border-slate-700 hover:bg-slate-800 text-slate-300 font-medium transition text-xs">Batal</button>
-            <button type="submit" class="w-1/2 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold transition text-xs shadow-md shadow-blue-600/25">Terapkan Pagu</button>
+            <button type="submit" id="btnSubmitBudget" class="w-1/2 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold transition text-xs shadow-md shadow-blue-600/25">Terapkan Pagu</button>
           </div>
         </form>
       </div>
@@ -965,10 +939,10 @@
 
     // DUMMY DATA AWAL
     const DUMMY_WALLETS = [
-      { id: 'W1', name: 'Kas Tunai', balance: 500000, number: 'Cash di Tangan', color: '#10b981' },
-      { id: 'W2', name: 'Rekening BCA', balance: 6770000, number: '8271-992-019', color: '#3b82f6' },
-      { id: 'W3', name: 'GoPay / E-Wallet', balance: 350000, number: '0812-3456-7890', color: '#06b6d4' },
-      { id: 'W4', name: 'Tabungan Mandiri', balance: 12500000, number: '137-00-998822-1', color: '#8b5cf6' }
+      { id: 'W-1', name: 'Kas Tunai', balance: 500000, number: 'Cash di Tangan', color: '#10b981' },
+      { id: 'W-2', name: 'Rekening BCA', balance: 6770000, number: '8271-992-019', color: '#3b82f6' },
+      { id: 'W-3', name: 'GoPay / E-Wallet', balance: 350000, number: '0812-3456-7890', color: '#06b6d4' },
+      { id: 'W-4', name: 'Tabungan Mandiri', balance: 12500000, number: '137-00-998822-1', color: '#8b5cf6' }
     ];
 
     const DUMMY_CATEGORIES = [
@@ -983,10 +957,10 @@
     ];
 
     const DUMMY_BUDGETS = [
-      { id: 'B1', category: 'Makan & Minum', limit: 1800000 },
-      { id: 'B2', category: 'Transportasi & Bensin', limit: 600000 },
-      { id: 'B3', category: 'Belanja Pokok', limit: 1200000 },
-      { id: 'B4', category: 'Tagihan & Langganan', limit: 800000 }
+      { id: 'B-1', category: 'Makan & Minum', limit: 1800000 },
+      { id: 'B-2', category: 'Transportasi & Bensin', limit: 600000 },
+      { id: 'B-3', category: 'Belanja Pokok', limit: 1200000 },
+      { id: 'B-4', category: 'Tagihan & Langganan', limit: 800000 }
     ];
 
     const DUMMY_TRANSACTIONS = [
@@ -1323,7 +1297,7 @@
 
       const currentType = document.getElementById('txType').value;
       let catOpts = '<option value="">-- Pilih Kategori --</option>';
-      let budgetCatOpts = '';
+      let budgetCatOpts = '<option value="">-- Pilih Kategori Anggaran --</option>';
 
       categoriesData.forEach(c => {
         if (c.type === currentType) {
@@ -1349,7 +1323,6 @@
         filteredTx = transactionsData.filter(t => t.date === todayStr);
       } else if (activeTimeFilter === 'month') {
         filteredTx = transactionsData.filter(t => t.date && t.date.startsWith(curMonth));
-        // Fallback jika belum ada transaksi di bulan sistem hari ini, tampilkan bulan dari mutasi terbaru
         if (filteredTx.length === 0 && transactionsData.length > 0) {
           const sorted = [...transactionsData].sort((a,b) => new Date(b.date) - new Date(a.date));
           const latestMonth = sorted[0].date ? sorted[0].date.slice(0, 7) : curMonth;
@@ -1380,16 +1353,20 @@
         heroSubtext.textContent = 'Total pengeluaran tercatat pada periode bulan berjalan ini';
       }
 
-      // 4 Mini Pos Rekening / Dompet
-      const w1 = walletsData[0] ? walletsData[0].balance : 500000;
-      const w2 = walletsData[1] ? walletsData[1].balance : 6770000;
-      const w3 = walletsData[2] ? walletsData[2].balance : 350000;
-      const w4 = walletsData[3] ? walletsData[3].balance : 12500000;
-
-      document.getElementById('miniWallet1').textContent = formatRupiah(w1);
-      document.getElementById('miniWallet2').textContent = formatRupiah(w2);
-      document.getElementById('miniWallet3').textContent = formatRupiah(w3);
-      document.getElementById('miniWallet4').textContent = formatRupiah(w4);
+      // Render 4 Mini Pos Rekening / Dompet di Bawah Hero Card
+      const heroContainer = document.getElementById('heroMiniWalletsContainer');
+      if (heroContainer) {
+        const top4 = walletsData.slice(0, 4);
+        heroContainer.innerHTML = top4.map((w, i) => `
+          <div class="border-r console-divider last:border-r-0 pr-2">
+            <span class="text-[11px] console-text-muted block font-medium truncate">${w.name}</span>
+            <div class="flex items-center gap-2 mt-1">
+              <i class="fa-solid fa-arrow-trend-up text-emerald-400 text-xs"></i>
+              <span class="text-sm md:text-base font-bold">${formatRupiah(w.balance)}</span>
+            </div>
+          </div>
+        `).join('');
+      }
     }
 
     function setBalanceView(view) {
@@ -1760,30 +1737,49 @@
       applyTableFilters();
     }
 
-    /* GRID DOMPET */
+    /* GRID DOMPET DENGAN FITUR EDIT & HAPUS */
     function renderWalletsGrid() {
       const container = document.getElementById('walletsGridContainer');
+      if (walletsData.length === 0) {
+        container.innerHTML = `<p class="col-span-full text-center text-xs console-text-muted py-8">Belum ada pos rekening tercatat. Klik tombol "+ Tambah Pos Rekening".</p>`;
+        return;
+      }
+
       container.innerHTML = walletsData.map(w => {
         return `
-          <div class="console-card border rounded-3xl p-5 shadow-xl flex flex-col justify-between transition-all">
+          <div class="console-card border rounded-3xl p-5 shadow-xl flex flex-col justify-between transition-all group">
             <div>
               <div class="flex items-center justify-between mb-3">
                 <span class="text-[10px] font-bold console-text-muted uppercase tracking-wider">Buku Rekening</span>
-                <div class="w-8 h-8 rounded-xl console-card-sub text-blue-500 flex items-center justify-center text-xs">
-                  <i class="fa-solid fa-building-columns"></i>
+                <!-- Tombol Aksi Edit & Hapus -->
+                <div class="flex items-center gap-1">
+                  <button onclick="openWalletModal('${w.id}')" title="Edit Pos Rekening" class="p-1.5 rounded-lg console-text-muted hover:text-blue-400 hover:bg-blue-500/10 transition text-xs">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                  </button>
+                  <button onclick="confirmDeleteWallet('${w.id}')" title="Hapus Pos Rekening" class="p-1.5 rounded-lg console-text-muted hover:text-rose-400 hover:bg-rose-500/10 transition text-xs">
+                    <i class="fa-regular fa-trash-can"></i>
+                  </button>
                 </div>
               </div>
-              <h4 class="text-sm font-bold mb-0.5">${w.name}</h4>
-              <p class="text-xs console-text-muted font-mono">${w.number || 'Kas Wan'}</p>
+
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-2xl console-card-sub text-blue-500 flex items-center justify-center text-sm border console-divider shrink-0">
+                  <i class="fa-solid fa-building-columns"></i>
+                </div>
+                <div>
+                  <h4 class="text-sm font-bold leading-tight">${w.name}</h4>
+                  <p class="text-[11px] console-text-muted font-mono mt-0.5">${w.number || 'Kas Wan'}</p>
+                </div>
+              </div>
             </div>
             
             <div class="mt-5 pt-3.5 border-t console-divider flex items-end justify-between">
               <div>
-                <span class="text-[10px] console-text-muted">Saldo Tercatat:</span>
-                <p class="text-base font-black tracking-tight">${formatRupiah(w.balance)}</p>
+                <span class="text-[10px] console-text-muted block">Saldo Tercatat:</span>
+                <p class="text-base font-black tracking-tight mt-0.5">${formatRupiah(w.balance)}</p>
               </div>
-              <button onclick="quickRecordWallet('${w.name}')" class="px-2.5 py-1 rounded-xl bg-blue-600/10 hover:bg-blue-600/20 text-blue-500 text-xs font-bold transition">
-                + Mutasi
+              <button onclick="quickRecordWallet('${w.name}')" class="px-3 py-1.5 rounded-xl bg-blue-600/10 hover:bg-blue-600/20 text-blue-500 text-xs font-bold transition flex items-center gap-1.5">
+                <i class="fa-solid fa-plus text-[10px]"></i> Mutasi
               </button>
             </div>
           </div>
@@ -1796,13 +1792,148 @@
       document.getElementById('txWallet').value = name;
     }
 
-    /* BUDGETING TAB */
+    /* PENGELOLAAN POS DOMPET: EDIT & HAPUS */
+    function openWalletModal(walletId = null) {
+      const modal = document.getElementById('modalWallet');
+      const form = document.getElementById('formWallet');
+      form.reset();
+
+      const editIdInput = document.getElementById('walletEditId');
+      const titleEl = document.getElementById('walletModalTitle');
+      const submitBtn = document.getElementById('btnSubmitWallet');
+
+      if (walletId) {
+        const w = walletsData.find(item => item.id === walletId);
+        if (w) {
+          editIdInput.value = w.id;
+          document.getElementById('walletName').value = w.name;
+          document.getElementById('walletBalance').value = w.balance;
+          document.getElementById('walletNumber').value = w.number || '';
+          titleEl.textContent = 'Edit Pos Rekening';
+          submitBtn.textContent = 'Perbarui Pos';
+        }
+      } else {
+        editIdInput.value = '';
+        titleEl.textContent = 'Tambah Pos Rekening';
+        submitBtn.textContent = 'Simpan Pos';
+      }
+
+      modal.classList.remove('hidden');
+    }
+
+    function handleSaveWallet(e) {
+      e.preventDefault();
+      const editId = document.getElementById('walletEditId').value;
+      const name = document.getElementById('walletName').value.trim();
+      const balance = Number(document.getElementById('walletBalance').value) || 0;
+      const number = document.getElementById('walletNumber').value.trim();
+
+      if (!name) {
+        showToast('Nama rekening/dompet wajib diisi', 'error');
+        return;
+      }
+
+      if (editId) {
+        // Mode Edit
+        const targetWallet = walletsData.find(w => w.id === editId);
+        if (targetWallet) {
+          const oldName = targetWallet.name;
+          targetWallet.name = name;
+          targetWallet.balance = balance;
+          targetWallet.number = number || 'Kas Pribadi';
+
+          // Sinkronkan nama dompet pada riwayat transaksi jika berubah
+          if (oldName !== name) {
+            transactionsData.forEach(t => {
+              if (t.wallet === oldName) t.wallet = name;
+              if (t.targetWallet === oldName) t.targetWallet = name;
+            });
+          }
+
+          persistLocalData();
+          renderAll();
+          closeModal('modalWallet');
+          showToast(`Pos "${name}" berhasil diperbarui!`);
+
+          if (!IS_PREVIEW) {
+            fetch(GAS_URL, {
+              method: 'POST',
+              body: JSON.stringify({
+                action: 'saveWallet',
+                wallet: targetWallet,
+                username: currentUser ? currentUser.username : 'wan'
+              })
+            }).catch(() => {});
+          }
+        }
+      } else {
+        // Mode Tambah Baru
+        const exists = walletsData.some(w => w.name.toLowerCase() === name.toLowerCase());
+        if (exists) {
+          showToast('Pos rekening ini sudah ada!', 'error');
+          return;
+        }
+
+        const newW = {
+          id: 'W-' + Date.now(),
+          name,
+          balance,
+          number: number || 'Kas Pribadi'
+        };
+        walletsData.push(newW);
+        persistLocalData();
+        renderAll();
+        closeModal('modalWallet');
+        showToast(`Pos "${name}" berhasil ditambahkan!`);
+
+        if (!IS_PREVIEW) {
+          fetch(GAS_URL, {
+            method: 'POST',
+            body: JSON.stringify({
+              action: 'saveWallet',
+              wallet: newW,
+              username: currentUser ? currentUser.username : 'wan'
+            })
+          }).catch(() => {});
+        }
+      }
+    }
+
+    function confirmDeleteWallet(walletId) {
+      const w = walletsData.find(item => item.id === walletId);
+      if (!w) return;
+
+      showConfirmModal(
+        `Hapus Pos "${w.name}"?`,
+        `Apakah Anda yakin ingin menghapus pos rekening ini? Saldo ${formatRupiah(w.balance)} akan dihapus dari kalkulasi buku kas.`,
+        () => {
+          walletsData = walletsData.filter(item => item.id !== walletId);
+          persistLocalData();
+          renderAll();
+          showToast(`Pos "${w.name}" berhasil dihapus.`);
+
+          if (!IS_PREVIEW) {
+            fetch(GAS_URL, {
+              method: 'POST',
+              body: JSON.stringify({
+                action: 'deleteWallet',
+                id: walletId,
+                name: w.name,
+                username: currentUser ? currentUser.username : 'wan'
+              })
+            }).catch(() => {});
+          }
+        }
+      );
+    }
+
+    /* BUDGETING TAB DENGAN FITUR EDIT & HAPUS */
     function renderBudgetsFull() {
       const container = document.getElementById('budgetsFullContainer');
       const now = new Date().toISOString().slice(0, 7);
 
       if (budgetsData.length === 0) {
-        container.innerHTML = `<p class="col-span-2 text-center text-xs console-text-muted py-6">Belum ada pagu anggaran dibuat.</p>`;
+        container.innerHTML = `<p class="col-span-2 text-center text-xs console-text-muted py-8">Belum ada pagu anggaran dibuat. Klik "+ Atur Pagu Anggaran".</p>`;
         return;
       }
 
@@ -1827,13 +1958,22 @@
         }
 
         return `
-          <div class="console-card border rounded-3xl p-5 shadow-xl space-y-3">
+          <div class="console-card border rounded-3xl p-5 shadow-xl space-y-3.5 group">
             <div class="flex items-center justify-between">
               <div>
                 <h4 class="text-sm font-bold">${b.category}</h4>
                 <p class="text-[11px] console-text-muted">Pagu: ${formatRupiah(limit)} / bulan</p>
               </div>
-              ${statusBadge}
+              <div class="flex items-center gap-2">
+                ${statusBadge}
+                <!-- Tombol Aksi Edit & Hapus Pagu -->
+                <button onclick="openBudgetModal('${b.id || b.category}')" title="Edit Pagu" class="p-1 rounded-lg console-text-muted hover:text-blue-400 hover:bg-blue-500/10 transition text-xs">
+                  <i class="fa-solid fa-pen-to-square"></i>
+                </button>
+                <button onclick="confirmDeleteBudget('${b.id || b.category}', '${b.category}')" title="Hapus Pagu" class="p-1 rounded-lg console-text-muted hover:text-rose-400 hover:bg-rose-500/10 transition text-xs">
+                  <i class="fa-regular fa-trash-can"></i>
+                </button>
+              </div>
             </div>
 
             <div>
@@ -1846,15 +1986,118 @@
               </div>
             </div>
 
-            <div class="flex items-center justify-between text-[10px] pt-1 console-text-muted">
-              <span>Sisa: <strong class="${remaining >= 0 ? 'text-emerald-400' : 'text-rose-400'}">${formatRupiah(remaining)}</strong></span>
-              <button onclick="editBudgetCategory('${b.category}', ${limit})" class="text-blue-500 hover:text-blue-400 font-semibold">
-                Edit Pagu
+            <div class="flex items-center justify-between text-[11px] pt-1 border-t console-divider console-text-muted">
+              <span>Sisa Pagu: <strong class="${remaining >= 0 ? 'text-emerald-400' : 'text-rose-400'} font-bold">${formatRupiah(remaining)}</strong></span>
+              <button onclick="openBudgetModal('${b.id || b.category}')" class="text-blue-500 hover:text-blue-400 font-semibold text-xs flex items-center gap-1">
+                <i class="fa-solid fa-pen-to-square text-[10px]"></i> Edit Pagu
               </button>
             </div>
           </div>
         `;
       }).join('');
+    }
+
+    /* PENGELOLAAN PAGU ANGGARAN: EDIT & HAPUS */
+    function openBudgetModal(budgetIdOrCat = null) {
+      const modal = document.getElementById('modalBudget');
+      const form = document.getElementById('formBudget');
+      form.reset();
+      populateDropdowns();
+
+      const editIdInput = document.getElementById('budgetEditId');
+      const catSelect = document.getElementById('budgetCategory');
+      const limitInput = document.getElementById('budgetLimit');
+      const titleEl = document.getElementById('budgetModalTitle');
+      const submitBtn = document.getElementById('btnSubmitBudget');
+
+      if (budgetIdOrCat) {
+        const b = budgetsData.find(item => item.id === budgetIdOrCat || item.category === budgetIdOrCat);
+        if (b) {
+          editIdInput.value = b.id || b.category;
+          catSelect.value = b.category;
+          limitInput.value = b.limit;
+          titleEl.textContent = 'Edit Pagu Anggaran';
+          submitBtn.textContent = 'Perbarui Pagu';
+        }
+      } else {
+        editIdInput.value = '';
+        titleEl.textContent = 'Atur Pagu Anggaran Bulanan';
+        submitBtn.textContent = 'Terapkan Pagu';
+      }
+
+      modal.classList.remove('hidden');
+    }
+
+    function handleSaveBudget(e) {
+      e.preventDefault();
+      const editId = document.getElementById('budgetEditId').value;
+      const cat = document.getElementById('budgetCategory').value;
+      const limit = Number(document.getElementById('budgetLimit').value);
+
+      if (!cat) {
+        showToast('Pilih kategori pos anggaran', 'error');
+        return;
+      }
+
+      if (!limit || limit <= 0) {
+        showToast('Batas anggaran harus lebih dari 0', 'error');
+        return;
+      }
+
+      const existIdx = budgetsData.findIndex(b => b.category === cat || (editId && b.id === editId));
+      let savedBudgetObj = null;
+
+      if (existIdx !== -1) {
+        budgetsData[existIdx].category = cat;
+        budgetsData[existIdx].limit = limit;
+        savedBudgetObj = budgetsData[existIdx];
+      } else {
+        savedBudgetObj = { id: 'B-' + Date.now(), category: cat, limit };
+        budgetsData.push(savedBudgetObj);
+      }
+
+      persistLocalData();
+      renderAll();
+      closeModal('modalBudget');
+      showToast(`Pagu ${cat} berhasil diperbarui!`);
+
+      if (!IS_PREVIEW) {
+        fetch(GAS_URL, {
+          method: 'POST',
+          body: JSON.stringify({
+            action: 'saveBudget',
+            id: savedBudgetObj.id,
+            category: cat,
+            limit: limit,
+            username: currentUser ? currentUser.username : 'wan'
+          })
+        }).catch(() => {});
+      }
+    }
+
+    function confirmDeleteBudget(budgetId, catName) {
+      showConfirmModal(
+        `Hapus Pagu Anggaran?`,
+        `Apakah Anda yakin ingin menghapus pagu anggaran untuk pos "${catName}"?`,
+        () => {
+          budgetsData = budgetsData.filter(b => b.id !== budgetId && b.category !== catName);
+          persistLocalData();
+          renderAll();
+          showToast(`Pagu anggaran ${catName} berhasil dihapus.`);
+
+          if (!IS_PREVIEW) {
+            fetch(GAS_URL, {
+              method: 'POST',
+              body: JSON.stringify({
+                action: 'deleteBudget',
+                id: budgetId,
+                category: catName,
+                username: currentUser ? currentUser.username : 'wan'
+              })
+            }).catch(() => {});
+          }
+        }
+      );
     }
 
     /* LAPORAN & REKAP */
@@ -2039,87 +2282,12 @@
       });
     }
 
-    /* MODAL DOMPET & BUDGET */
-    function openWalletModal() {
-      document.getElementById('formWallet').reset();
-      document.getElementById('modalWallet').classList.remove('hidden');
-    }
-
-    function handleSaveWallet(e) {
-      e.preventDefault();
-      const name = document.getElementById('walletName').value.trim();
-      const balance = Number(document.getElementById('walletInitialBalance').value) || 0;
-      const number = document.getElementById('walletNumber').value.trim();
-
-      const exists = walletsData.some(w => w.name.toLowerCase() === name.toLowerCase());
-      if (exists) {
-        showToast('Pos rekening ini sudah ada!', 'error');
-        return;
-      }
-
-      const newW = { id: 'W-' + Date.now(), name, balance, number: number || 'Kas Pribadi' };
-      walletsData.push(newW);
-      persistLocalData();
-      renderAll();
-      closeModal('modalWallet');
-      showToast('Pos rekening baru ditambahkan!');
-
-      if (!IS_PREVIEW) {
-        fetch(GAS_URL, {
-          method: 'POST',
-          body: JSON.stringify({ action: 'saveWallet', wallet: newW, username: 'wan' })
-        }).catch(() => {});
-      }
-    }
-
-    function openBudgetModal() {
-      document.getElementById('formBudget').reset();
-      populateDropdowns();
-      document.getElementById('modalBudget').classList.remove('hidden');
-    }
-
-    function editBudgetCategory(catName, currentLimit) {
-      openBudgetModal();
-      document.getElementById('budgetCategory').value = catName;
-      document.getElementById('budgetLimit').value = currentLimit;
-    }
-
-    function handleSaveBudget(e) {
-      e.preventDefault();
-      const cat = document.getElementById('budgetCategory').value;
-      const limit = Number(document.getElementById('budgetLimit').value);
-
-      if (!limit || limit <= 0) {
-        showToast('Batas anggaran harus lebih dari 0', 'error');
-        return;
-      }
-
-      const existIdx = budgetsData.findIndex(b => b.category === cat);
-      if (existIdx !== -1) {
-        budgetsData[existIdx].limit = limit;
-      } else {
-        budgetsData.push({ id: 'B-' + Date.now(), category: cat, limit });
-      }
-
-      persistLocalData();
-      renderAll();
-      closeModal('modalBudget');
-      showToast(`Pagu ${cat} berhasil diperbarui!`);
-
-      if (!IS_PREVIEW) {
-        fetch(GAS_URL, {
-          method: 'POST',
-          body: JSON.stringify({ action: 'saveBudget', category: cat, limit: limit, username: 'wan' })
-        }).catch(() => {});
-      }
-    }
-
     function closeModal(modalId) {
       document.getElementById(modalId).classList.add('hidden');
     }
 
     function openHelpModal() {
-      showToast('Aplikasi Buku Kas Mandiri i\'m_wan v2.5 - Full Screen', 'info');
+      showToast('Aplikasi Buku Kas Mandiri i\'m_wan v2.6 - Full Screen', 'info');
     }
 
     /* EKSPOR CSV */
