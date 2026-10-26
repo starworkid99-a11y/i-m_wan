@@ -814,7 +814,7 @@
 
           <div id="txCategorySection">
             <label class="block text-xs font-medium text-slate-300 mb-1">Pos Kategori Belanja</label>
-            <select id="txCategory" required class="w-full bg-[#121317] border border-[#272b38] rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-blue-500">
+            <select id="txCategory" class="w-full bg-[#121317] border border-[#272b38] rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-blue-500">
               <!-- Dynamic -->
             </select>
           </div>
@@ -2208,19 +2208,30 @@
         return;
       }
       if (!wallet) {
-        showToast('Pilih sumber rekening/dompet', 'error');
+        showToast('Pilih sumber rekening/dompet asal', 'error');
         return;
       }
-      if (type === 'Transfer' && (!targetWallet || targetWallet === wallet)) {
-        showToast('Pilih tujuan transfer yang berbeda dari dompet asal', 'error');
-        return;
+      if (type === 'Transfer') {
+        if (!targetWallet) {
+          showToast('Pilih tujuan pindah rekening', 'error');
+          return;
+        }
+        if (targetWallet === wallet) {
+          showToast('Tujuan rekening tidak boleh sama dengan dompet asal', 'error');
+          return;
+        }
+      } else {
+        if (!category) {
+          showToast('Pilih pos kategori transaksi', 'error');
+          return;
+        }
       }
 
       const newTx = {
         id: 'TX-' + Date.now(),
         date: normalizeDateStr(date),
         type: type,
-        category: category,
+        category: category || 'Transfer',
         wallet: wallet,
         targetWallet: type === 'Transfer' ? targetWallet : '',
         amount: amount,
